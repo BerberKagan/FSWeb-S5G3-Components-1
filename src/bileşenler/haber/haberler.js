@@ -90,28 +90,72 @@ const data = [
   }
 ];
 
-/*
-  Adım 1: Haber oluşturmak için 'haberYapici' adında bir bileşen(component) oluşturun.
-  Bileşeniniz, argümanı haberleri içeren dizi olarak alan bir fonksiyon olacak,
-  ve aşağıdaki gibi görünen bir DOM düğümü döndürecek:
 
-  <div class="article">
-    <h2>{haber başlığı}</h2>
-    <p class="tarih">{haber tarihi}</p>
+/* Adım 1: Haber oluşturmak için 'haberYapici' adında bir bileşen(component) oluşturun.
+Bileşeniniz, argümanı haberleri içeren dizi olarak alan bir fonksiyon olacak,
+ve aşağıdaki gibi görünen bir DOM düğümü döndürecek:
 
-    {üç ayrı paragraf elementi}
+<div class="article">
+  <h2>{haber başlığı}</h2>
+  <p class="tarih">{haber tarihi}</p>
 
-    <span class="expandButton">+</span>
-  </div>
+  {üç ayrı paragraf elementi}
 
-  Adım 2: Hala `haberYapici` içindeyiz, span.expandButton 'a bir click event dinleyici ekleyin.
-  Bu dinleyici div.article öğesine 'article-open' class'ını ekleyip/çıkaracak (toogle).
+  <span class="expandButton">+</span>
+</div> */
 
-  Adım 3: Fonksiyonunuzdan bir öğe döndürmeyi unutmayın.
+/* Adım 2: Hala `haberYapici` içindeyiz, span.expandButton 'a bir click event dinleyici ekleyin.
+Bu dinleyici div.article öğesine 'article-open' class'ını ekleyip/çıkaracak (toogle). */
 
-  Adım 4: Fonksiyonunuzun dışında, tüm datayı döngüye sokun(loop). Bir div.article öğesi oluşturmak ve bunu div.articles içindeki DOM'a eklemek için
-  her yinelemede oluşturduğunuz bileşeninizi kullanacaksınız(bknz. index.html).
+/* Adım 3: Fonksiyonunuzdan bir öğe döndürmeyi unutmayın. */
 
-  Adım 5: Veri dizisine yeni haber nesnesi eklemeyi deneyin. Diğer verilerle aynı yapıda olmasına dikkat edin.
-  Eklediğiniz yeni haberi görmek için sayfayı yenileyin.
-*/
+/* Adım 4: Fonksiyonunuzun dışında, tüm datayı döngüye sokun(loop). Bir div.article öğesi oluşturmak ve bunu div.articles içindeki DOM'a eklemek için
+her yinelemede oluşturduğunuz bileşeninizi kullanacaksınız(bknz. index.html). */
+
+/* Adım 5: Veri dizisine yeni haber nesnesi eklemeyi deneyin. Diğer verilerle aynı yapıda olmasına dikkat edin.
+Eklediğiniz yeni haberi görmek için sayfayı yenileyin. */
+
+let haberYapici = haberDizisi => {
+  const createArticle = document.createElement('div');
+  createArticle.classList.add('article');
+
+  const createH2 = document.createElement('h2');
+  createH2.textContent = haberDizisi.baslik;
+  createArticle.append(createH2);
+
+  const createTarih = document.createElement('p');
+  createTarih.classList.add('tarih');
+  createTarih.textContent = haberDizisi.tarih;
+  createArticle.append(createTarih);
+  
+  const prg1 = document.createElement('p');
+  prg1.textContent = haberDizisi.ilkParagraf;
+  createArticle.append(prg1);
+
+  const prg2 = document.createElement('p');
+  prg2.textContent = haberDizisi.ikinciParagraf;
+  createArticle.append(prg2);
+
+  const prg3 = document.createElement('p');
+  prg3.textContent = haberDizisi.ucuncuParagraf;
+  createArticle.append(prg3);
+
+  const createExpandButton = document.createElement('span');
+  createExpandButton.classList.add('expandButton');
+  createExpandButton.textContent = '+';
+  createExpandButton.style.color = '#93005a';
+  createExpandButton.style.fontSize = '20px';
+
+  createExpandButton.addEventListener('click', (e) => {
+    createArticle.classList.toggle('article-open');
+  })
+  
+  createArticle.append(createExpandButton);
+  return createArticle;
+}
+
+const haberler = document.querySelector('.articles');
+  
+  data.forEach((i) => {
+  haberler.append(haberYapici(i));
+  })
